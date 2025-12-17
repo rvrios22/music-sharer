@@ -18,8 +18,19 @@ async function main() {
       role: 'ADMIN',
     },
   });
+
+  const memberUser = await prisma.user.upsert({
+    where: { email: 'member@example.com' },
+    update: {},
+    create: {
+      email: 'member@example.com',
+      name: 'Member User',
+      password: hashedPassword, // Same password: admin123
+      role: 'MEMBER',
+    },
+  });
   
-  console.log({ user });
+  console.log({ user, memberUser });
 }
 
 main()
